@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_03fvqdz" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.29.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0">
+  <bpmn:error id="Error_0oc59yg" name="InputErrorNotification" errorCode="InputErrorNotification" />
+  <bpmn:collaboration id="Collaboration_03lteo3">
+    <bpmn:participant id="Participant_0l8igva" name="Employee management system" processRef="employee-management-process" />
+  </bpmn:collaboration>
+  <bpmn:process id="employee-management-process" name="Employee management process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Employee management process started">
+      <bpmn:outgoing>Flow_1u8mmtm</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1u8mmtm" sourceRef="StartEvent_1" targetRef="Activity_1pm97jj" />
+    <bpmn:sequenceFlow id="Flow_0w3n9nz" sourceRef="Activity_164bnsz" targetRef="Activity_1efiksq" />
+    <bpmn:sequenceFlow id="Flow_16crx8d" sourceRef="Activity_1efiksq" targetRef="Activity_0ygsvo8" />
+    <bpmn:sequenceFlow id="Flow_16citq3" sourceRef="Activity_0ygsvo8" targetRef="Activity_1qy8jxt" />
+    <bpmn:serviceTask id="Activity_164bnsz" name="Validate employee">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="validate-employee-email" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12pzcys</bpmn:incoming>
+      <bpmn:outgoing>Flow_0w3n9nz</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:businessRuleTask id="Activity_1efiksq" name="Calculate salary">
+      <bpmn:extensionElements>
+        <zeebe:calledDecision decisionId="Decision_1pb0wgk" resultVariable="employeeBenefits" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0w3n9nz</bpmn:incoming>
+      <bpmn:outgoing>Flow_16crx8d</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:scriptTask id="Activity_0ygsvo8" name="script">
+      <bpmn:extensionElements>
+        <zeebe:script expression="={&#34;tax&#34;: employeeBenefits.tax}" resultVariable="result" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_16crx8d</bpmn:incoming>
+      <bpmn:outgoing>Flow_16citq3</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_12pzcys" sourceRef="Activity_1pm97jj" targetRef="Activity_164bnsz" />
+    <bpmn:userTask id="Activity_1pm97jj">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formId="user-form" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1u8mmtm</bpmn:incoming>
+      <bpmn:outgoing>Flow_12pzcys</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_1rzyp1r" name="Employee management process completed">
+      <bpmn:incoming>Flow_0r0stmn</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_1qy8jxt" name="Send validation failure email" zeebe:modelerTemplate="io.camunda.connectors.email.v1" zeebe:modelerTemplateVersion="3" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzkwXzI0MjApIj4KPHBhdGggZD0iTTguMzM4MzUgOS45NTM2NUwxMC4zODk0IDEyLjAxMDRMOC4zMzI2MiAxNC4wNjcyTDkuMTQ2MTYgMTQuODc1TDEyLjAxMDcgMTIuMDEwNEw5LjE0NjE2IDkuMTQ1ODNMOC4zMzgzNSA5Ljk1MzY1WiIgZmlsbD0iYmxhY2siLz4KPHBhdGggZD0iTTEyLjM0ODggOS45NTM2NUwxNC4zOTk4IDEyLjAxMDRMMTIuMzQzIDE0LjA2NzJMMTMuMTU2NiAxNC44NzVMMTYuMDIxMiAxMi4wMTA0TDEzLjE1NjYgOS4xNDU4M0wxMi4zNDg4IDkuOTUzNjVaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNMy45NzIgMTEuNDM3NUgxLjEyNTMzVjIuNzkyMTlMNy42NzM3NiA3LjMyMzk2QzcuNzY5NjcgNy4zOTA0OSA3Ljg4MzYgNy40MjYxNCA4LjAwMDMyIDcuNDI2MTRDOC4xMTcwNSA3LjQyNjE0IDguMjMwOTggNy4zOTA0OSA4LjMyNjg5IDcuMzIzOTZMMTQuODc1MyAyLjc5MjE5VjhIMTYuMDIxMlYyLjI3MDgzQzE2LjAyMTIgMS45NjY5NCAxNS45MDA0IDEuNjc1NDkgMTUuNjg1NiAxLjQ2MDYxQzE1LjQ3MDcgMS4yNDU3MiAxNS4xNzkyIDEuMTI1IDE0Ljg3NTMgMS4xMjVIMS4xMjUzM0MwLjgyMTQzMiAxLjEyNSAwLjUyOTk4NCAxLjI0NTcyIDAuMzE1MDk5IDEuNDYwNjFDMC4xMDAyMTQgMS42NzU0OSAtMC4wMjA1MDc4IDEuOTY2OTQgLTAuMDIwNTA3OCAyLjI3MDgzVjExLjQzNzVDLTAuMDIwNTA3OCAxMS43NDE0IDAuMTAwMjE0IDEyLjAzMjggMC4zMTUwOTkgMTIuMjQ3N0MwLjUyOTk4NCAxMi40NjI2IDAuODIxNDMyIDEyLjU4MzMgMS4xMjUzMyAxMi41ODMzSDMuOTcyVjExLjQzNzVaTTEzLjYxNDkgMi4yNzA4M0w4LjAwMDMyIDYuMTU1MjFMMi4zODU3NCAyLjI3MDgzSDEzLjYxNDlaIiBmaWxsPSIjRkM1RDBEIi8+CjxwYXRoIGQ9Ik00LjI4MjEgOS45NTM2NUw2LjMzMzE0IDEyLjAxMDRMNC4yNzYzNyAxNC4wNjcyTDUuMDg5OTEgMTQuODc1TDcuOTU0NDkgMTIuMDEwNEw1LjA4OTkxIDkuMTQ1ODNMNC4yODIxIDkuOTUzNjVaIiBmaWxsPSJibGFjayIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzkwXzI0MjAiPgo8cmVjdCB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:email:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="simple" target="authentication.type" />
+          <zeebe:input source="aqheelahmed2003@gmail.com" target="authentication.username" />
+          <zeebe:input source="ohur rxur rgmu vtjp" target="authentication.password" />
+          <zeebe:input source="smtp" target="protocol" />
+          <zeebe:input source="smtp.gmail.com" target="data.smtpConfig.smtpHost" />
+          <zeebe:input source="=587" target="data.smtpConfig.smtpPort" />
+          <zeebe:input source="TLS" target="data.smtpConfig.smtpCryptographicProtocol" />
+          <zeebe:input source="sendEmailSmtp" target="data.smtpActionDiscriminator" />
+          <zeebe:input source="aqheelahmed2003@gmail.com" target="data.smtpAction.from" />
+          <zeebe:input source="=email" target="data.smtpAction.to" />
+          <zeebe:input source="Hi" target="data.smtpAction.subject" />
+          <zeebe:input source="PLAIN" target="data.smtpAction.contentType" />
+          <zeebe:input source="=&#34;Hello&#34; +email" target="data.smtpAction.body" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="3" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.email.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_16citq3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0r0stmn</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0r0stmn" sourceRef="Activity_1qy8jxt" targetRef="Event_1rzyp1r" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_03lteo3">
+      <bpmndi:BPMNShape id="Participant_0l8igva_di" bpmnElement="Participant_0l8igva" isHorizontal="true">
+        <dc:Bounds x="130" y="40" width="1550" height="530" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="162" y="205" width="76" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1daxftu_di" bpmnElement="Activity_164bnsz">
+        <dc:Bounds x="460" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1x7r5af_di" bpmnElement="Activity_1efiksq">
+        <dc:Bounds x="620" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0auxlq7_di" bpmnElement="Activity_0ygsvo8">
+        <dc:Bounds x="780" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13x4a7e_di" bpmnElement="Activity_1pm97jj">
+        <dc:Bounds x="290" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1rzyp1r_di" bpmnElement="Event_1rzyp1r">
+        <dc:Bounds x="1182" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1177" y="213" width="66" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bpnrr7_di" bpmnElement="Activity_1qy8jxt">
+        <dc:Bounds x="950" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1u8mmtm_di" bpmnElement="Flow_1u8mmtm">
+        <di:waypoint x="218" y="180" />
+        <di:waypoint x="290" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w3n9nz_di" bpmnElement="Flow_0w3n9nz">
+        <di:waypoint x="560" y="180" />
+        <di:waypoint x="620" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16crx8d_di" bpmnElement="Flow_16crx8d">
+        <di:waypoint x="720" y="180" />
+        <di:waypoint x="780" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16citq3_di" bpmnElement="Flow_16citq3">
+        <di:waypoint x="880" y="180" />
+        <di:waypoint x="950" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12pzcys_di" bpmnElement="Flow_12pzcys">
+        <di:waypoint x="390" y="180" />
+        <di:waypoint x="460" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0r0stmn_di" bpmnElement="Flow_0r0stmn">
+        <di:waypoint x="1050" y="180" />
+        <di:waypoint x="1182" y="180" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="tax-bonus-calculation" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.29.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0">
+  <decision id="Decision_1pb0wgk" name="Tax and Bonus Calculation">
+    <decisionTable id="DecisionTable_09qzl2n">
+      <input id="Input_1" label="EmployeeRole">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>empRole</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Tax" name="tax" typeRef="number" biodi:width="192" />
+      <output id="OutputClause_1hy0i7l" label="Bonus Percentage" name="bonus" typeRef="number" biodi:width="192" />
+      <rule id="DecisionRule_078c9af">
+        <inputEntry id="UnaryTests_17m2g8w">
+          <text>"Developer"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0w4xrr9">
+          <text>10</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1hkx47h">
+          <text>20</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1stn3dl">
+        <inputEntry id="UnaryTests_0r1rm4g">
+          <text>"Tester"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1uw1fhg">
+          <text>8</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_05spfo2">
+          <text>10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1nq3e9b">
+        <inputEntry id="UnaryTests_1rj7dvw">
+          <text>"Junior Developer"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ol6yti">
+          <text>6</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_19qms4w">
+          <text>12</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1d4cp8i">
+        <inputEntry id="UnaryTests_0ydb0ke">
+          <text>"Intern"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_15xuiif">
+          <text>3</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1pbaap7">
+          <text>8</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04x3z5t">
+        <inputEntry id="UnaryTests_0ttv3h7">
+          <text>"Analyst"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_13jyj4g">
+          <text>7</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1vir7y1">
+          <text>16</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1gt2ult">
+        <inputEntry id="UnaryTests_06akajy">
+          <text>"Consultant"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19uopea">
+          <text>12</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1scj4wg">
+          <text>25</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1pb0wgk">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

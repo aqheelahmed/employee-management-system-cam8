@@ -1,0 +1,47 @@
+{
+  "components": [
+    {
+      "label": "Email",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_188c62s",
+        "columns": null
+      },
+      "id": "Field_1g98gs1",
+      "key": "email"
+    },
+    {
+      "label": "Employee Role",
+      "values": [
+        {
+          "label": "Intern",
+          "value": "Intern"
+        },
+        {
+          "label": "Tester",
+          "value": "Tester"
+        },
+        {
+          "label": "Developer",
+          "value": "Developer"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_1fx81gg",
+        "columns": null
+      },
+      "id": "Field_1d3qrno",
+      "key": "empRole"
+    }
+  ],
+  "type": "default",
+  "id": "user-form",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.6.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.29.0"
+  },
+  "schemaVersion": 17
+}
