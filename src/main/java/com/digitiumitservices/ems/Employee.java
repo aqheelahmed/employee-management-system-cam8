@@ -4,5 +4,6 @@ public class Employee {
 	
 	
 private String empName ;
+	private String Id;
 
 }
